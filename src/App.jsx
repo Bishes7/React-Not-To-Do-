@@ -1,6 +1,34 @@
+import { useState } from "react";
 import "./App.css";
+import Form from "./Components/Form";
 
 function App() {
+  const [taskList, settaskList] = useState([]);
+
+  const addTaskList = (taskObj) => {
+    const obj = {
+      ...taskList
+      id: randomIdGnerator(),
+      type: "entry",
+    };
+
+    settaskList([...taskList, obj]);
+  };
+  console.log(taskList);
+
+  const randomIdGnerator = (length = 6) => {
+    const str =
+      "qwertyuioplkjhgfdsazxxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM1234567890";
+
+    let id = "";
+
+    for (let i = 0; i < 6; i++) {
+      const randomIndex = Math.floor(Math.random() * str.length);
+
+      id += str[randomIndex];
+    }
+    return id;
+  };
   return (
     <>
       <div className="wrapper pt-5">
@@ -8,37 +36,7 @@ function App() {
           <h1 className="text-center yuji-mai-regular">Time Divider App</h1>
 
           {/* <!-- form --> */}
-          <form
-            onSubmit="handleOnSubmit(this)"
-            action="javascript:void(0)"
-            className="border p-5 rounded-5 shadow-lg mt-5"
-          >
-            <div className="row g-2">
-              <div className="col-md-6">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Add Task "
-                  aria-label="First name"
-                  name="task"
-                  id="task"
-                />
-              </div>
-              <div className="col-md-2">
-                <input
-                  type="number"
-                  className="form-control"
-                  placeholder="hours"
-                  aria-label="Last name"
-                  name="hours"
-                  min="1"
-                />
-              </div>
-              <div className="col-md-4 d-grid">
-                <button className="btn btn-success">Add New Task</button>
-              </div>
-            </div>
-          </form>
+          <Form addTaskList={addTaskList} />
 
           {/* <!-- Tables --> */}
           <div className="row mt-5">
